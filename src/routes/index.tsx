@@ -55,27 +55,24 @@ const rand = (n: number) => {
   const x = Math.sin(n * 12.9898) * 43758.5453;
   return x - Math.floor(x);
 };
-const INTRO_PETALS = Array.from({ length: 340 }, (_, i) => {
-  const y = rand(i + 101) * 130 + 40;
-  const dist = y + 40 + rand(i + 701) * 15; // always ends fully above the screen
-  return {
-    id: i,
-    x: rand(i + 1) * 130 - 90,
-    y,
-    s: 22 + rand(i + 201) * 46,
-    d: rand(i + 301) * 0.6,
-    dur: 1.4 + rand(i + 601) * 0.6,
-    r: (rand(i + 401) - 0.5) * 16,
-    tx: dist * (0.95 + (rand(i + 501) - 0.5) * 0.2),
-    ty: -dist,
-  };
-});
+// Petals launch from a wide band below-left of the screen and sweep up-right.
+const INTRO_PETALS = Array.from({ length: 480 }, (_, i) => ({
+  id: i,
+  x: rand(i + 1) * 95 - 70,
+  y: rand(i + 101) * 100 + 50,
+  s: 22 + rand(i + 201) * 40,
+  d: rand(i + 301) * 0.7,
+  dur: 1.5 * (1 + rand(i + 601) * 0.08),
+  r: (rand(i + 401) - 0.5) * 12,
+  tx: 140 * (1 + (rand(i + 501) - 0.5) * 0.08),
+  ty: -165 * (1 + (rand(i + 701) - 0.5) * 0.06),
+}));
 
 function Intro() {
   const petals = INTRO_PETALS;
   const [done, setDone] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 2800);
+    const t = setTimeout(() => setDone(true), 2600);
     return () => clearTimeout(t);
   }, []);
   if (done) return null;
@@ -158,12 +155,19 @@ function Index() {
         <p className="reveal text-sm uppercase tracking-[0.4em] text-muted-foreground" style={{ animationDelay: "2.4s" }}>
           Ngày Phụ nữ Việt Nam
         </p>
-        <h1 className="font-script shimmer-text mt-2 text-center text-6xl md:text-8xl" aria-label="Chúc mừng 20/10">
-          {"Chúc mừng 20/10".split("").map((c, i) => (
-            <span key={i} className="letter" style={{ animationDelay: `${2.6 + i * 0.08}s` }}>
-              {c === " " ? "\u00A0" : c}
-            </span>
-          ))}
+        <h1 className="font-script mt-2 flex flex-wrap justify-center gap-x-[0.3em] text-center text-6xl md:text-8xl" aria-label="Chúc mừng 20/10">
+          {["Chúc", "mừng", "20/10"].map((word, w, arr) => {
+            const offset = arr.slice(0, w).join("").length + w;
+            return (
+              <span key={word} className="whitespace-nowrap">
+                {word.split("").map((c, i) => (
+                  <span key={i} className="letter" style={{ animationDelay: `${2.6 + (offset + i) * 0.08}s` }}>
+                    {c}
+                  </span>
+                ))}
+              </span>
+            );
+          })}
         </h1>
         <p className="reveal mx-auto mt-4 max-w-xl text-center text-foreground/80" style={{ animationDelay: "3.8s" }}>
           Gửi tới những người phụ nữ tuyệt vời nhất — luôn xinh đẹp, hạnh phúc và tràn đầy yêu thương.
