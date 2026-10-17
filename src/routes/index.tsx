@@ -71,7 +71,7 @@ function Intro() {
   const petals = INTRO_PETALS;
   const [done, setDone] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 3400);
+    const t = setTimeout(() => setDone(true), 4200);
     return () => clearTimeout(t);
   }, []);
   if (done) return null;
