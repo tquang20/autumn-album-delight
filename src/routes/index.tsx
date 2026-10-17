@@ -55,18 +55,21 @@ const rand = (n: number) => {
   const x = Math.sin(n * 12.9898) * 43758.5453;
   return x - Math.floor(x);
 };
-const INTRO_PETALS = Array.from({ length: 340 }, (_, i) => ({
-  id: i,
-  // start positions below-left of the screen, spread along a diagonal band
-  x: rand(i + 1) * 130 - 90,
-  y: rand(i + 101) * 130 + 40,
-  s: 22 + rand(i + 201) * 46,
-  d: rand(i + 301) * 0.6,
-  dur: 1.4 + rand(i + 601) * 0.6,
-  r: (rand(i + 401) - 0.5) * 16,
-  tx: 150 + (rand(i + 501) - 0.5) * 20,
-  ty: -(150 + (rand(i + 701) - 0.5) * 20),
-}));
+const INTRO_PETALS = Array.from({ length: 340 }, (_, i) => {
+  const y = rand(i + 101) * 130 + 40;
+  const dist = y + 40 + rand(i + 701) * 15; // always ends fully above the screen
+  return {
+    id: i,
+    x: rand(i + 1) * 130 - 90,
+    y,
+    s: 22 + rand(i + 201) * 46,
+    d: rand(i + 301) * 0.6,
+    dur: 1.4 + rand(i + 601) * 0.6,
+    r: (rand(i + 401) - 0.5) * 16,
+    tx: dist * (0.95 + (rand(i + 501) - 0.5) * 0.2),
+    ty: -dist,
+  };
+});
 
 function Intro() {
   const petals = INTRO_PETALS;

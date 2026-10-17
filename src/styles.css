@@ -256,18 +256,19 @@ body { font-family: "Be Vietnam Pro", sans-serif; }
 }
 @keyframes storm {
   from { transform: translate3d(0, 0, 0) rotate(var(--r)); }
-  to { transform: translate3d(var(--tx), var(--ty), 0) rotate(var(--r)); }
+  85% { opacity: 1; }
+  to { opacity: 0; transform: translate3d(var(--tx), var(--ty), 0) rotate(var(--r)); }
 }
 
 .reveal { animation: reveal 1.4s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes reveal { from { opacity: 0; filter: blur(14px); transform: translateY(24px); letter-spacing: .6em; } }
 .letter {
-  display: inline-block; padding: .15em .25em .3em; margin: 0 -.25em -.15em;
-  background: linear-gradient(180deg, var(--primary), var(--rose-deep));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  display: inline-block;
+  color: var(--rose-deep);
+  text-shadow: 0 4px 20px oklch(0.6 0.2 5 / 0.25);
   animation: letter 1s cubic-bezier(.2,1.4,.4,1) both;
 }
-@keyframes letter { from { opacity: 0; filter: blur(10px); transform: translateY(-60px) rotate(-20deg) scale(1.6); } }
+@keyframes letter { from { opacity: 0; transform: translateY(-60px) scale(1.4); } }
 .album-enter { animation: album-in 1.6s cubic-bezier(.2,1.2,.3,1) 3.9s both; }
 @keyframes album-in {
   0% { opacity: 0; filter: blur(16px); transform: perspective(1000px) rotateY(-90deg) scale(.5); }
