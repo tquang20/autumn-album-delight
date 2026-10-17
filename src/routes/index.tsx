@@ -55,23 +55,24 @@ const rand = (n: number) => {
   const x = Math.sin(n * 12.9898) * 43758.5453;
   return x - Math.floor(x);
 };
-const INTRO_PETALS = Array.from({ length: 220 }, (_, i) => ({
+const INTRO_PETALS = Array.from({ length: 340 }, (_, i) => ({
   id: i,
-  x: Math.pow(rand(i + 1), 1.4) * 105 - 5,
-  y: rand(i + 101) * 30,
-  dur: 1.8 + rand(i + 601) * 1.1,
-  sw: (rand(i + 701) - 0.5) * 12,
-  s: 26 + rand(i + 201) * 60,
-  d: 0,
-  r: rand(i + 401) * 360,
-  dx: (rand(i + 501) - 0.3) * 10,
+  // start positions below-left of the screen, spread along a diagonal band
+  x: rand(i + 1) * 130 - 90,
+  y: rand(i + 101) * 130 + 40,
+  s: 22 + rand(i + 201) * 46,
+  d: rand(i + 301) * 0.6,
+  dur: 1.4 + rand(i + 601) * 0.6,
+  r: (rand(i + 401) - 0.5) * 16,
+  tx: 150 + (rand(i + 501) - 0.5) * 20,
+  ty: -(150 + (rand(i + 701) - 0.5) * 20),
 }));
 
 function Intro() {
   const petals = INTRO_PETALS;
   const [done, setDone] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 4200);
+    const t = setTimeout(() => setDone(true), 2800);
     return () => clearTimeout(t);
   }, []);
   if (done) return null;
@@ -84,14 +85,14 @@ function Intro() {
           className="intro-petal"
           style={{
             left: `${p.x}%`,
-            top: `${100 + p.y}%`,
+            top: `${p.y}%`,
             width: p.s,
             height: p.s,
-            animationDelay: `${(p.x / 100) * 0.7 + rand(p.id + 801) * 0.4}s`,
+            animationDelay: `${p.d}s`,
             animationDuration: `${p.dur}s`,
-            ["--sw" as string]: `${p.sw}vw`,
             ["--r" as string]: `${p.r}deg`,
-            ["--dx" as string]: `${p.dx}vw`,
+            ["--tx" as string]: `${p.tx}vw`,
+            ["--ty" as string]: `${p.ty}vh`,
           }}
         />
       ))}
