@@ -55,24 +55,25 @@ const rand = (n: number) => {
   const x = Math.sin(n * 12.9898) * 43758.5453;
   return x - Math.floor(x);
 };
-// Petals launch from a wide band below-left of the screen and sweep up-right.
-const INTRO_PETALS = Array.from({ length: 480 }, (_, i) => ({
+// Petals start fully off-screen (below-left) and travel twice the screen
+// diagonal, so mid-flight they sweep across the whole viewport.
+const INTRO_PETALS = Array.from({ length: 800 }, (_, i) => ({
   id: i,
-  x: rand(i + 1) * 95 - 70,
-  y: rand(i + 101) * 100 + 50,
+  x: -rand(i + 1) * 140,
+  y: 100 + rand(i + 101) * 165,
   s: 22 + rand(i + 201) * 40,
-  d: rand(i + 301) * 0.7,
-  dur: 1.5 * (1 + rand(i + 601) * 0.08),
-  r: (rand(i + 401) - 0.5) * 12,
-  tx: 140 * (1 + (rand(i + 501) - 0.5) * 0.08),
-  ty: -165 * (1 + (rand(i + 701) - 0.5) * 0.06),
+  d: rand(i + 301) * 0.4,
+  dur: 2.1 * (1 + rand(i + 601) * 0.08),
+  r: (rand(i + 401) - 0.5) * 10,
+  tx: 280 * (1 + (rand(i + 501) - 0.5) * 0.06),
+  ty: -330 * (1 + (rand(i + 701) - 0.5) * 0.06),
 }));
 
 function Intro() {
   const petals = INTRO_PETALS;
   const [done, setDone] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 2600);
+    const t = setTimeout(() => setDone(true), 2900);
     return () => clearTimeout(t);
   }, []);
   if (done) return null;
