@@ -51,24 +51,25 @@ function Petals() {
   );
 }
 
+const rand = (n: number) => {
+  const x = Math.sin(n * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+};
+const INTRO_PETALS = Array.from({ length: 220 }, (_, i) => ({
+  id: i,
+  x: rand(i + 1) * 110 - 5,
+  y: rand(i + 101) * 110 - 5,
+  s: 26 + rand(i + 201) * 60,
+  d: rand(i + 301) * 0.7,
+  r: rand(i + 401) * 360,
+  dx: (rand(i + 501) - 0.2) * 90,
+}));
+
 function Intro() {
-  const [petals, setPetals] = useState<
-    { id: number; x: number; y: number; s: number; d: number; r: number; dx: number }[]
-  >([]);
+  const petals = INTRO_PETALS;
   const [done, setDone] = useState(false);
   useEffect(() => {
-    setPetals(
-      Array.from({ length: 160 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 110 - 5,
-        y: Math.random() * 110 - 5,
-        s: 24 + Math.random() * 60,
-        d: Math.random() * 0.9,
-        r: Math.random() * 360,
-        dx: (Math.random() - 0.3) * 80,
-      })),
-    );
-    const t = setTimeout(() => setDone(true), 4200);
+    const t = setTimeout(() => setDone(true), 3400);
     return () => clearTimeout(t);
   }, []);
   if (done) return null;
