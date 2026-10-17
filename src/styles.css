@@ -238,3 +238,37 @@ body { font-family: "Be Vietnam Pro", sans-serif; }
   position: absolute; top: 20px; right: 24px; width: 44px; height: 44px; border-radius: 999px;
   background: oklch(1 0 0 / 0.85); color: var(--foreground); font-size: 1.1rem;
 }
+
+/* Intro petal storm */
+.intro { position: fixed; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
+.intro-veil {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, oklch(0.95 0.04 10), oklch(0.85 0.09 5));
+  animation: veil 3.4s ease forwards;
+}
+@keyframes veil { 0%, 45% { opacity: 1; } 100% { opacity: 0; } }
+.intro-petal {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, oklch(0.95 0.06 0), oklch(0.72 0.17 5));
+  border-radius: 150% 0 150% 0;
+  box-shadow: 0 6px 18px oklch(0.45 0.16 5 / 0.25);
+  opacity: 0;
+  animation: storm 3.6s cubic-bezier(.3,.1,.3,1) both;
+}
+@keyframes storm {
+  0% { opacity: 0; transform: translate(-60vw, -40vh) rotate(0) scale(.4); }
+  25% { opacity: 1; transform: translate(0, 0) rotate(var(--r)) scale(1); }
+  50% { opacity: 1; transform: translate(4vw, 3vh) rotate(calc(var(--r) + 90deg)) scale(1.05); }
+  100% { opacity: 0; transform: translate(var(--dx), 70vh) rotate(calc(var(--r) + 400deg)) scale(.5); filter: blur(4px); }
+}
+
+.reveal { animation: reveal 1.4s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes reveal { from { opacity: 0; filter: blur(14px); transform: translateY(24px); letter-spacing: .6em; } }
+.letter { display: inline-block; background: inherit; -webkit-background-clip: text; background-clip: text; animation: letter 1s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes letter { from { opacity: 0; filter: blur(10px); transform: translateY(-60px) rotate(-20deg) scale(1.6); } }
+.album-enter { animation: album-in 1.6s cubic-bezier(.2,1.2,.3,1) 4.2s both; }
+@keyframes album-in {
+  0% { opacity: 0; filter: blur(16px); transform: perspective(1000px) rotateY(-90deg) scale(.5); }
+  60% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: none; }
+}
