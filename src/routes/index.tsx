@@ -57,12 +57,14 @@ const rand = (n: number) => {
 };
 const INTRO_PETALS = Array.from({ length: 220 }, (_, i) => ({
   id: i,
-  x: rand(i + 1) * 110 - 5,
-  y: rand(i + 101) * 110 - 5,
+  x: Math.pow(rand(i + 1), 1.4) * 105 - 5,
+  y: rand(i + 101) * 30,
+  dur: 1.8 + rand(i + 601) * 1.1,
+  sw: (rand(i + 701) - 0.5) * 12,
   s: 26 + rand(i + 201) * 60,
-  d: rand(i + 301) * 0.7,
+  d: 0,
   r: rand(i + 401) * 360,
-  dx: (rand(i + 501) - 0.2) * 90,
+  dx: (rand(i + 501) - 0.3) * 10,
 }));
 
 function Intro() {
@@ -82,10 +84,12 @@ function Intro() {
           className="intro-petal"
           style={{
             left: `${p.x}%`,
-            top: `${p.y}%`,
+            top: `${100 + p.y}%`,
             width: p.s,
             height: p.s,
-            animationDelay: `${p.d}s`,
+            animationDelay: `${(p.x / 100) * 0.7 + rand(p.id + 801) * 0.4}s`,
+            animationDuration: `${p.dur}s`,
+            ["--sw" as string]: `${p.sw}vw`,
             ["--r" as string]: `${p.r}deg`,
             ["--dx" as string]: `${p.dx}vw`,
           }}
