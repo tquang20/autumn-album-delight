@@ -142,3 +142,99 @@
     color: var(--color-foreground);
   }
 }
+
+:root {
+  --background: oklch(0.97 0.02 10);
+  --foreground: oklch(0.3 0.08 10);
+  --primary: oklch(0.6 0.2 5);
+  --primary-foreground: oklch(0.99 0 0);
+  --muted-foreground: oklch(0.5 0.08 10);
+  --gold: oklch(0.8 0.13 80);
+  --rose-deep: oklch(0.45 0.16 5);
+  --rose-soft: oklch(0.88 0.07 10);
+  --font-script: "Dancing Script", cursive;
+}
+body { font-family: "Be Vietnam Pro", sans-serif; }
+.font-script { font-family: var(--font-script); }
+
+.festive-bg {
+  background:
+    radial-gradient(circle at 20% 20%, oklch(0.92 0.06 350 / 0.9), transparent 45%),
+    radial-gradient(circle at 80% 30%, oklch(0.93 0.06 60 / 0.8), transparent 40%),
+    radial-gradient(circle at 50% 90%, oklch(0.9 0.08 10 / 0.9), transparent 50%),
+    var(--background);
+}
+.shimmer-text {
+  background: linear-gradient(90deg, var(--rose-deep), var(--primary), var(--gold), var(--primary), var(--rose-deep));
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 5s linear infinite, fade-up 1s both;
+}
+@keyframes shimmer { to { background-position: 200% center; } }
+.fade-up { animation: fade-up 1s both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+.petal {
+  position: absolute; top: -40px;
+  background: radial-gradient(circle at 30% 30%, oklch(0.92 0.08 0), oklch(0.75 0.16 5));
+  border-radius: 150% 0 150% 0;
+  opacity: 0.85;
+  animation-name: fall; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+@keyframes fall {
+  0% { transform: translate(0, -5vh) rotate(0); }
+  50% { transform: translate(40px, 50vh) rotate(180deg); }
+  100% { transform: translate(-20px, 110vh) rotate(360deg); }
+}
+
+.album { perspective: 1200px; animation: float 4s ease-in-out infinite; cursor: pointer; }
+@keyframes float { 50% { transform: translateY(-14px); } }
+.album-cover {
+  width: 260px; height: 330px; border-radius: 6px 16px 16px 6px;
+  background: linear-gradient(135deg, var(--primary), var(--rose-deep));
+  box-shadow: inset 14px 0 0 oklch(0 0 0 / 0.15), 0 30px 60px -15px oklch(0.45 0.16 5 / 0.6);
+  display: flex; align-items: center; justify-content: center;
+  transform-origin: left center; transition: transform .6s ease;
+  color: var(--primary-foreground);
+}
+.album:hover .album-cover { transform: rotateY(-22deg); }
+.album-frame {
+  width: 75%; height: 70%; border: 2px solid var(--gold); border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 6px oklch(0.8 0.13 80 / 0.25);
+}
+
+.album-open { animation: open-book .8s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes open-book { from { opacity: 0; transform: perspective(1200px) rotateX(25deg) scale(.8); } to { opacity: 1; transform: none; } }
+.album-pages {
+  background: oklch(0.99 0.01 60 / 0.85); border-radius: 18px;
+  box-shadow: 0 30px 60px -20px oklch(0.45 0.16 5 / 0.4); border: 1px solid var(--rose-soft);
+}
+.polaroid {
+  background: oklch(1 0 0); padding: 8px 8px 22px; border-radius: 4px;
+  box-shadow: 0 8px 20px -8px oklch(0.3 0.08 10 / 0.4);
+  transform: rotate(var(--r)); transition: transform .3s, box-shadow .3s;
+  animation: fade-up .6s both;
+}
+.polaroid:hover { transform: rotate(0) scale(1.06); box-shadow: 0 16px 30px -10px oklch(0.45 0.16 5 / 0.5); z-index: 1; }
+
+.btn-soft, .btn-primary { padding: .6rem 1.2rem; border-radius: 999px; font-size: .9rem; transition: transform .2s; }
+.btn-soft { background: oklch(1 0 0 / 0.7); color: var(--foreground); border: 1px solid var(--rose-soft); }
+.btn-primary { background: var(--primary); color: var(--primary-foreground); }
+.btn-soft:hover, .btn-primary:hover { transform: translateY(-2px); }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+  background: oklch(0.2 0.05 10 / 0.55); backdrop-filter: blur(12px);
+  animation: fade .3s both;
+}
+@keyframes fade { from { opacity: 0; } }
+.lightbox-img {
+  max-width: 90vw; max-height: 85vh; border-radius: 12px; border: 6px solid oklch(1 0 0);
+  box-shadow: 0 30px 80px oklch(0 0 0 / 0.5); animation: zoom .4s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes zoom { from { transform: scale(.6); opacity: 0; } }
+.lightbox-close {
+  position: absolute; top: 20px; right: 24px; width: 44px; height: 44px; border-radius: 999px;
+  background: oklch(1 0 0 / 0.85); color: var(--foreground); font-size: 1.1rem;
+}
