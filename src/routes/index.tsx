@@ -51,6 +51,49 @@ function Petals() {
   );
 }
 
+function Intro() {
+  const [petals, setPetals] = useState<
+    { id: number; x: number; y: number; s: number; d: number; r: number; dx: number }[]
+  >([]);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    setPetals(
+      Array.from({ length: 160 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 110 - 5,
+        y: Math.random() * 110 - 5,
+        s: 24 + Math.random() * 60,
+        d: Math.random() * 0.9,
+        r: Math.random() * 360,
+        dx: (Math.random() - 0.3) * 80,
+      })),
+    );
+    const t = setTimeout(() => setDone(true), 4200);
+    return () => clearTimeout(t);
+  }, []);
+  if (done) return null;
+  return (
+    <div className="intro" aria-hidden>
+      <div className="intro-veil" />
+      {petals.map((p) => (
+        <span
+          key={p.id}
+          className="intro-petal"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.s,
+            height: p.s,
+            animationDelay: `${p.d}s`,
+            ["--r" as string]: `${p.r}deg`,
+            ["--dx" as string]: `${p.dx}vw`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Index() {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [open, setOpen] = useState(false);
@@ -101,19 +144,24 @@ function Index() {
         onChange={(e) => onFiles(e.target.files)}
       />
 
+      <Intro />
       <section className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col items-center px-4 py-12">
-        <p className="fade-up text-sm uppercase tracking-[0.4em] text-muted-foreground">
+        <p className="reveal text-sm uppercase tracking-[0.4em] text-muted-foreground" style={{ animationDelay: "2.4s" }}>
           Ngày Phụ nữ Việt Nam
         </p>
-        <h1 className="fade-up font-script shimmer-text mt-2 text-center text-6xl md:text-8xl">
-          Chúc mừng 20/10
+        <h1 className="font-script shimmer-text mt-2 text-center text-6xl md:text-8xl" aria-label="Chúc mừng 20/10">
+          {"Chúc mừng 20/10".split("").map((c, i) => (
+            <span key={i} className="letter" style={{ animationDelay: `${2.6 + i * 0.08}s` }}>
+              {c === " " ? "\u00A0" : c}
+            </span>
+          ))}
         </h1>
-        <p className="fade-up mx-auto mt-4 max-w-xl text-center text-foreground/80" style={{ animationDelay: ".3s" }}>
+        <p className="reveal mx-auto mt-4 max-w-xl text-center text-foreground/80" style={{ animationDelay: "3.8s" }}>
           Gửi tới những người phụ nữ tuyệt vời nhất — luôn xinh đẹp, hạnh phúc và tràn đầy yêu thương.
         </p>
 
         {!open ? (
-          <div className="mt-14 flex flex-col items-center gap-6">
+          <div className="album-enter mt-14 flex flex-col items-center gap-6">
             <button onClick={onAlbumClick} className="album group" aria-label="Mở album ảnh">
               <div className="album-cover">
                 <div className="album-frame">
