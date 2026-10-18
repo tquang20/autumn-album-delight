@@ -1,0 +1,14 @@
+THƯ MỤC LƯU ẢNH KỶ NIỆM 3 NĂM CẤP 3:
+===================================
+1. Năm học 2024 - 2025 (Lớp 10):
+   -> Thả các ảnh của lớp 10 vào thư mục: photos/2024-2025/
+
+2. Năm học 2025 - 2026 (Lớp 11):
+   -> Thả các ảnh của lớp 11 vào thư mục: photos/2025-2026/
+
+3. Năm học 2026 - 2027 (Lớp 12):
+   -> Thả các ảnh của lớp 12 vào thư mục: photos/2026-2027/
+
+* Định dạng hỗ trợ: .jpg, .jpeg, .png, .webp
+* Tên file ảnh (ví dụ: "Ngay_dau_tien.jpg") sẽ tự động trở thành tiêu đề hiển thị dưới ảnh!
+* Ngay khi bạn copy/paste ảnh vào các thư mục này, website sẽ tự động nhận diện và cập nhật ảnh lên đúng sợi dây ký ức của năm học đó!
